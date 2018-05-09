@@ -1,0 +1,2 @@
+# Dinobot
+Our discord bot
