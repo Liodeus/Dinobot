@@ -1,1 +1,1 @@
-python dinobot.py
+worker: python dinobot.py
