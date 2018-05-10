@@ -151,4 +151,4 @@ def dinosay(strg):
 	return f"Dinobot : {strg}\n"
 
 
-bot.run("")
+bot.run(BOT_TOKEN)
