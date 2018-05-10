@@ -10,6 +10,7 @@ import os
 import collections
 import base64
 from bs4 import BeautifulSoup
+import binascii
 
 
 bot = commands.Bot(command_prefix = "!")
@@ -157,6 +158,32 @@ async def b64enc(ctx):
 			await bot.say(encode)
 		except:
 			await bot.say("Erreur d'encodage")
+
+
+@bot.command(pass_context = True)
+@commands.cooldown(1, 1, commands.BucketType.user)
+async def bin2text(ctx):
+	binas = ctx.message.content.split()[1:]
+	for bina in binas:
+		try:
+			n = int(bina, 2)
+			decode = n.to_bytes((n.bit_length() + 7) // 8, 'big').decode("utf-8") or '\0'
+			await bot.say(decode)
+		except:
+			await bot.say("Erreur de decode")
+
+
+@bot.command(pass_context = True)
+@commands.cooldown(1, 1, commands.BucketType.user)
+async def text2bin(ctx):
+	texts = ctx.message.content.split()[1:]
+	for text in texts:
+		try:
+			bits = bin(int.from_bytes(text.encode("utf-8"), 'big'))[2:]
+			decode = bits.zfill(8 * ((len(bits) + 7) // 8))
+			await bot.say(decode)
+		except:
+			await bot.say("Erreur de decode")
 
 
 bot.run(os.environ["BOT_TOKEN"])
