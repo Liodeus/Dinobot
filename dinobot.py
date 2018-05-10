@@ -4,6 +4,10 @@ from discord.ext import commands
 from random import randint
 from time import sleep
 import asyncio
+import requests
+import re
+import collections
+from bs4 import BeautifulSoup
 
 
 bot = commands.Bot(command_prefix = "!")
@@ -36,12 +40,7 @@ async def translate(ctx):
 	if len(ctx.message.content) > 10:
 		print(f"\n{ctx.message.author} : {ctx.message.content}")
 		strg = ' '.join(ctx.message.content.split(' ')[1:])
-		newStrg = ""
-		for x in strg:
-			if x != ' ':
-				newStrg += chr(randint(65, 122))
-			else:
-				newStrg += ' '
+		newStrg = ''.join(chr(randint(65, 122)) if x != ' ' else ' ' for x in strg)
 		print(f"Dinobot : {newStrg}")
 		await bot.say(newStrg)
 	else:
@@ -50,8 +49,67 @@ async def translate(ctx):
 		await bot.say(error)
 
 
+@bot.command(pass_context=True)
+async def rootme(ctx):
+	url = "https://www.root-me.org/"
+	pseudos = ["Liodeus", "THEWOLF-37439", "Moindjaro", "Ori0n__"]
+	dic = {}
+
+	for pseudo in pseudos:
+		res = requests.get(url + pseudo)
+		soup = BeautifulSoup(res.text, "html.parser")
+		infos = soup.find_all("ul", {"class": "spip"})
+		spans = infos[0].find_all("span")
+		score = spans[1].text
+
+		dic[pseudo] = score
+	order = collections.OrderedDict(sorted(dic.items(), key=lambda x : x[1]))
+	final = [x for x in order.items()]
+	strg = ''.join(f"{x[0]} : {x[1]} points.\n" for x in final[::-1])
+
+	embed = discord.Embed(
+		title = "Score root-me",
+		color = 0xe67e22,
+		description = strg
+	)
+
+	print(f"{ctx.message.author} : {ctx.message.content}")
+	print(strg)
+	await bot.say(embed=embed)
+
+
+@bot.command(pass_context = True)
+async def ctftime(ctx):
+	url = "https://ctftime.org/stats/2018/FR"
+	headers = {
+		"Connection": "close",
+		"User-Agent": 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36'	}
+
+	res = requests.get(url, headers=headers)
+	soup = BeautifulSoup(res.text, "html.parser")
+	tab = soup.find_all("table", {"class": "table table-striped"})
+	tds = tab[0].find_all("td")
+	teams = tds[:125]
+
+	strg = ""
+	for x in range(0, len(teams), 5):
+		teamName = re.findall('">(.*?)<', str(teams[x+2]))
+		strg += f"{teams[x].text}\t{teams[x+1].text}\t{teamName[0]}\t{teams[x+3].text}\t{teams[x+4].text}\n"
+
+	embed = discord.Embed(
+		title = "Scoreboard ctftime",
+		color = 0xe67e22,
+		description = strg
+	)
+
+	print(f"{ctx.message.author} : {ctx.message.content}")
+	print(strg)
+	await bot.say(embed=embed)
+
+
 def dinosay(strg):
-	return f"Dinobot : {strg}"
+	return f"Dinobot : {strg}\n"
 
 
-bot.run("secret")
+bot.run("")
+#dictionnaire pseudo: [[dernierMessage, avantDernierMessage], [countDernier, countAvantDernier]]
