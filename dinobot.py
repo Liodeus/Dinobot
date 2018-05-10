@@ -16,17 +16,17 @@ bot = commands.Bot(command_prefix = "!")
 async def on_ready():
 	print("co")
 	messages = ["Grrrrrr Dinobot arrive sur le serveur !", "Dinobot arrive pour bouffer vos daronnes !", "Dinobot ici pour casser du CDAISI !"]
-#	for server in bot.servers:
-#		lstChannel = list(server.channels)
-#		lstChannelName = [x.name for x in list(server.channels)]
-#		try:
-#			index = lstChannelName.index("general")
-#			print(f"Join {server}")
-#			message = messages[randint(0, len(messages) - 1)]
-#			print(f"{message}")
-#			await bot.send_message(lstChannel[index], message)
-#		except:
-#			print(dinosay("Pas de channel \"general\" sur {server}"))
+	for server in bot.servers:
+		lstChannel = list(server.channels)
+		lstChannelName = [x.name for x in list(server.channels)]
+		try:
+			index = lstChannelName.index("general")
+			print(f"Join {server}")
+			message = messages[randint(0, len(messages) - 1)]
+			print(f"{message}")
+			await bot.send_message(lstChannel[index], message)
+		except:
+			print(dinosay("Pas de channel \"general\" sur {server}"))
 
 
 @bot.event
@@ -151,4 +151,4 @@ def dinosay(strg):
 	return f"Dinobot : {strg}\n"
 
 
-bot.run(BOT_TOKEN)
+bot.run(os.environ["BOT_TOKEN"])
