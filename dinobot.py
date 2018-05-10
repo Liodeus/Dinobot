@@ -8,6 +8,7 @@ import requests
 import re
 import os
 import collections
+import base64
 from bs4 import BeautifulSoup
 
 
@@ -15,7 +16,6 @@ bot = commands.Bot(command_prefix = "!")
 
 @bot.event
 async def on_ready():
-	print("co")
 	messages = ["Grrrrrr Dinobot arrive sur le serveur !", "Dinobot arrive pour bouffer vos daronnes !", "Dinobot ici pour casser du CDAISI !"]
 	for server in bot.servers:
 		lstChannel = list(server.channels)
@@ -39,23 +39,18 @@ async def on_command_error(error, ctx):
 @bot.command(pass_context=True)
 @commands.cooldown(1, 5, commands.BucketType.user)
 async def dino(ctx):
-		print(f"{ctx.message.author} : {ctx.message.content}")
-		print(dinosay("grrrrrr"))
 		await bot.say("grrrrrr")
 
 
 @bot.command(pass_context=True)
 @commands.cooldown(1, 5, commands.BucketType.user)
 async def trad(ctx):
-	if len(ctx.message.content) > 10:
-		print(f"\n{ctx.message.author} : {ctx.message.content}")
+	if len(ctx.message.content) > 6:
 		strg = ' '.join(ctx.message.content.split(' ')[1:])
 		newStrg = ''.join(chr(randint(65, 122)) if x != ' ' else ' ' for x in strg)
-		print(f"Dinobot : {newStrg}")
 		await bot.say(newStrg)
 	else:
 		error = "Il manque le message Dino !"
-		print(dinosay(error))
 		await bot.say(error)
 
 
@@ -63,7 +58,7 @@ async def trad(ctx):
 @commands.cooldown(1, 5, commands.BucketType.user)
 async def rootme(ctx):
 	url = "https://www.root-me.org/"
-	pseudos = ["Liodeus", "THEWOLF-37439", "Moindjaro", "Ori0n__"]
+	pseudos = ["Liodeus", "THEWOLF-37439", "Moindjaro", "Ori0n__", "Sneagle-121577"]
 	dic = {}
 
 	for pseudo in pseudos:
@@ -78,12 +73,11 @@ async def rootme(ctx):
 	final = [x for x in order.items()][::-1]
 	_pseudo = '\n'.join(f"{x[0]}" for x in final)
 	_score = '\n'.join(f"{x[1]}" for x in final)
-	strg = ''.join(f"{x[0]} : {x[1]} points.\n" for x in final)
+
 	embedScore = discord.Embed(
 		title = "Score root-me",
 		color = 0xe67e22,
 	)
-
 	embedScore.add_field(
 		name = "Pseudo",
 		value = _pseudo
@@ -93,8 +87,6 @@ async def rootme(ctx):
 		value = _score
 	)
 
-	print(f"{ctx.message.author} : {ctx.message.content}")
-	print(strg)
 	await bot.say(embed=embedScore)
 
 
@@ -122,14 +114,11 @@ async def ctftime(ctx):
 		mondialeFrance += f"{teams[x].text} / {teams[x+1].text}\n"
 		nom += f"{teamName[0]}\n"
 		points += f"{teams[x+3].text}\n"
-		strg += f"{teams[x].text}\t{teams[x+1].text}\t{teamName[0]}\t{teams[x+3].text}\t{teams[x+4].text}\n"
-
 
 	embed = discord.Embed(
 		title = "Scoreboard ctftime",
 		color = 0xe67e22,
 	)
-
 	embed.add_field(
 		name = "Mondial / France",
 		value = mondialeFrance
@@ -143,13 +132,31 @@ async def ctftime(ctx):
 		value = points
 	)
 
-	print(f"{ctx.message.author} : {ctx.message.content}")
-	print(strg)
 	await bot.say(embed=embed)
 
 
-def dinosay(strg):
-	return f"Dinobot : {strg}\n"
+@bot.command(pass_context = True)
+@commands.cooldown(1, 1, commands.BucketType.user)
+async def b64dec(ctx):
+	text = ctx.message.content.split()[1:]
+	for x in text:
+		try:
+			decode = str(base64.b64decode(x), "utf-8")
+			await bot.say(decode)
+		except:
+			await bot.say("Erreur de decode")
+
+
+@bot.command(pass_context = True)
+@commands.cooldown(1, 1, commands.BucketType.user)
+async def b64enc(ctx):
+	text = ctx.message.content.split()[1:]
+	for x in text:
+		try:
+			encode = str(base64.b64encode(bytes(x, "utf-8")), "utf-8")
+			await bot.say(encode)
+		except:
+			await bot.say("Erreur d'encodage")
 
 
 bot.run(os.environ["BOT_TOKEN"])
