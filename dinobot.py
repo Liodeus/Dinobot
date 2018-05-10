@@ -28,15 +28,24 @@ async def on_ready():
 #		except:
 #			print(dinosay("Pas de channel \"general\" sur {server}"))
 
+
+@bot.event
+async def on_command_error(error, ctx):
+	if isinstance(error, commands.CommandOnCooldown):
+		print("Spam")
+
+
 @bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def dino(ctx):
-	print(f"{ctx.message.author} : {ctx.message.content}")
-	print(dinosay("grrrrrr"))
-	await bot.say("grrrrrr")
+		print(f"{ctx.message.author} : {ctx.message.content}")
+		print(dinosay("grrrrrr"))
+		await bot.say("grrrrrr")
 
 
 @bot.command(pass_context=True)
-async def translate(ctx):
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def trad(ctx):
 	if len(ctx.message.content) > 10:
 		print(f"\n{ctx.message.author} : {ctx.message.content}")
 		strg = ' '.join(ctx.message.content.split(' ')[1:])
@@ -50,6 +59,7 @@ async def translate(ctx):
 
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def rootme(ctx):
 	url = "https://www.root-me.org/"
 	pseudos = ["Liodeus", "THEWOLF-37439", "Moindjaro", "Ori0n__"]
@@ -64,21 +74,31 @@ async def rootme(ctx):
 
 		dic[pseudo] = score
 	order = collections.OrderedDict(sorted(dic.items(), key=lambda x : x[1]))
-	final = [x for x in order.items()]
-	strg = ''.join(f"{x[0]} : {x[1]} points.\n" for x in final[::-1])
-
-	embed = discord.Embed(
+	final = [x for x in order.items()][::-1]
+	_pseudo = '\n'.join(f"{x[0]}" for x in final)
+	_score = '\n'.join(f"{x[1]}" for x in final)
+	strg = ''.join(f"{x[0]} : {x[1]} points.\n" for x in final)
+	embedScore = discord.Embed(
 		title = "Score root-me",
 		color = 0xe67e22,
-		description = strg
+	)
+
+	embedScore.add_field(
+		name = "Pseudo",
+		value = _pseudo
+	)
+	embedScore.add_field(
+		name = "Score",
+		value = _score
 	)
 
 	print(f"{ctx.message.author} : {ctx.message.content}")
 	print(strg)
-	await bot.say(embed=embed)
+	await bot.say(embed=embedScore)
 
 
 @bot.command(pass_context = True)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def ctftime(ctx):
 	url = "https://ctftime.org/stats/2018/FR"
 	headers = {
@@ -91,15 +111,35 @@ async def ctftime(ctx):
 	tds = tab[0].find_all("td")
 	teams = tds[:125]
 
+	mondialeFrance = ""
+	nom = ""
+	points = ""
 	strg = ""
 	for x in range(0, len(teams), 5):
 		teamName = re.findall('">(.*?)<', str(teams[x+2]))
+		
+		mondialeFrance += f"{teams[x].text} / {teams[x+1].text}\n"
+		nom += f"{teamName[0]}\n"
+		points += f"{teams[x+3].text}\n"
 		strg += f"{teams[x].text}\t{teams[x+1].text}\t{teamName[0]}\t{teams[x+3].text}\t{teams[x+4].text}\n"
+
 
 	embed = discord.Embed(
 		title = "Scoreboard ctftime",
 		color = 0xe67e22,
-		description = strg
+	)
+
+	embed.add_field(
+		name = "Mondial / France",
+		value = mondialeFrance
+	)
+	embed.add_field(
+		name = "Nom",
+		value = nom
+	)
+	embed.add_field(
+		name = "Points",
+		value = points
 	)
 
 	print(f"{ctx.message.author} : {ctx.message.content}")
@@ -112,4 +152,3 @@ def dinosay(strg):
 
 
 bot.run("")
-#dictionnaire pseudo: [[dernierMessage, avantDernierMessage], [countDernier, countAvantDernier]]
