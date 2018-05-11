@@ -53,7 +53,7 @@ async def dino(ctx):
     strg = ""
     for text in texts:
         strg += f"{text.translate(transTab)}"
-        await bot.say(strg)
+    await bot.say(strg)
 
 
 @bot.command(pass_context=True)
@@ -67,7 +67,7 @@ async def trad(ctx):
     strg = ""
     for text in texts:
         strg += f"{text.translate(transTab)}"
-        await bot.say(strg)
+    await bot.say(strg)
 
 
 #################################################################################
