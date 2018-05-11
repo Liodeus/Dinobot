@@ -20,15 +20,15 @@ async def on_ready():
     messages = ["Grrrrrr Dinobot arrive sur le serveur !",
                 "Dinobot arrive pour bouffer vos daronnes !",
                 "Dinobot ici pour casser du CDAISI !"]
-#    for server in bot.servers:
-#        lstChannel = list(server.channels)
-#        lstChannelName = [x.name for x in list(server.channels)]
-#        try:
-#            index = lstChannelName.index("general")
-#            message = messages[randint(0, len(messages) - 1)]
-#            await bot.send_message(lstChannel[index], message)
-#        except:
-#            pass
+    for server in bot.servers:
+        lstChannel = list(server.channels)
+        lstChannelName = [x.name for x in list(server.channels)]
+        try:
+            index = lstChannelName.index("general")
+            message = messages[randint(0, len(messages) - 1)]
+            await bot.send_message(lstChannel[index], message)
+        except:
+            pass
 
 
 @bot.event
