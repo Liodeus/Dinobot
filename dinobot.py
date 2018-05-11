@@ -46,25 +46,28 @@ async def on_command_error(error, ctx):
 @commands.cooldown(1, 5, commands.BucketType.user)
 async def dino(ctx):
     """
-        Just display Grrrrrrrrrrrr
+        Command to translate from human to dinolanguage !
     """
-    await bot.say("Grrrrrrrrrrrr")
+    transTab = str.maketrans('!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}', '"HmT!bN.>(U#EBks3;_|oea:PQ7`4@Yn}0cS<rd&fx1wG\\RqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ')
+    texts = ctx.message.content.split()[1:]
+    strg = ""
+    for text in texts:
+        strg += f"{text.translate(transTab)}"
+        await bot.say(strg)
 
 
 @bot.command(pass_context=True)
 @commands.cooldown(1, 5, commands.BucketType.user)
 async def trad(ctx):
     """
-        Command to translate your string in dinolanguage !
+        Command to translate from dinolanguage to human !
     """
-    if len(ctx.message.content) > 6:
-        strg = ' '.join(ctx.message.content.split(' ')[1:])
-        newStrg = ''.join(chr(randint(65, 122)) if x !=
-                          ' ' else ' ' for x in strg)
-        await bot.say(newStrg)
-    else:
-        error = "Il manque le message Dino !"
-        await bot.say(error)
+    transTab = str.maketrans('"HmT!bN.>(U#EBks3;_|oea:PQ7`4@Yn}0cS<rd&fx1wG\\RqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ', '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}')
+    texts = ctx.message.content.split()[1:]
+    strg = ""
+    for text in texts:
+        strg += f"{text.translate(transTab)}"
+        await bot.say(strg)
 
 
 #################################################################################
