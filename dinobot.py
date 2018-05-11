@@ -295,5 +295,4 @@ async def text2hex(ctx):
 #################################################################################
 
 
-bot.run("NDQzODE4NzAyNjc3NDc1MzM4.DdS9Sg.sExtRqGF1INzK3XWM4rO1_312kk")
-# bot.run(os.environ["BOT_TOKEN"])
+bot.run(os.environ["BOT_TOKEN"])
