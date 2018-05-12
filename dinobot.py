@@ -1,5 +1,6 @@
 from discord.ext import commands
 from bs4 import BeautifulSoup
+from datetime import datetime
 from random import randint
 import collections
 import requests
@@ -19,7 +20,8 @@ async def on_ready():
     """
     messages = ["Grrrrrr Dinobot arrive sur le serveur !",
                 "Dinobot arrive pour bouffer vos daronnes !",
-                "Dinobot ici pour casser du CDAISI !"]
+                "Dinobot ici pour casser du CDAISI !",
+                "Gogo dinoranger ! tutututututu"]
     for server in bot.servers:
         lstChannel = list(server.channels)
         lstChannelName = [x.name for x in list(server.channels)]
@@ -48,12 +50,13 @@ async def dino(ctx):
     """
         Command to translate from human to dinolanguage !
     """
-    transTab = str.maketrans('!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}', '"HmT!bN.>(U#EBks3;_|oea:PQ7`4@Yn}0cS<rd&fx1wG\\RqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ')
+    transTab = str.maketrans(
+        '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|} ', '"HmT!bN.>(U#EBks3;_|oea:PQ7`4@Yn}0cS<rd&fx1wG\\RqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ ')
     texts = ctx.message.content.split()[1:]
     strg = ""
     for text in texts:
         strg += f"{text.translate(transTab)}"
-        await bot.say(strg)
+    await bot.say(strg)
 
 
 @bot.command(pass_context=True)
@@ -62,12 +65,25 @@ async def trad(ctx):
     """
         Command to translate from dinolanguage to human !
     """
-    transTab = str.maketrans('"HmT!bN.>(U#EBks3;_|oea:PQ7`4@Yn}0cS<rd&fx1wG\\RqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ', '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}')
+    transTab = str.maketrans('"HmT!bN.>(U#EBks3;_|oea:PQ7`4@Yn}0cS<rd&fx1wG\\ \
+        RqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ ', '!"#$%&\'()*+,-./ \
+        0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrs \
+        tuvwxyz{|} ')
     texts = ctx.message.content.split()[1:]
     strg = ""
     for text in texts:
         strg += f"{text.translate(transTab)}"
-        await bot.say(strg)
+    await bot.say(strg)
+
+
+@bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def deadline(ctx):
+    """
+        Display days of the deadline
+    """
+    deadline = datetime(2018, 6, 16) - datetime.now()
+    await bot.say(f"{Il ne reste plus que deadline.days jours !}")
 
 
 #################################################################################
