@@ -74,6 +74,7 @@ async def trad(ctx):
     for text in texts:
         strg += f"{text.translate(transTab)}"
     await bot.say(strg)
+<<<<<<< HEAD
 
 
 @bot.command(pass_context=True)
@@ -84,6 +85,8 @@ async def deadline(ctx):
     """
     deadline = datetime(2018, 6, 16) - datetime.now()
     await bot.say(f"{Il ne reste plus que deadline.days jours !}")
+=======
+>>>>>>> b234b8167b9f4da01c3844fe56007e6f6059c5c5
 
 
 #################################################################################
