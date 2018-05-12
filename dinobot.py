@@ -83,7 +83,7 @@ async def deadline(ctx):
         Display days of the deadline
     """
     deadline = datetime(2018, 6, 16) - datetime.now()
-    await bot.say(f"{Il ne reste plus que deadline.days jours !}")
+    await bot.say(f"Il ne reste plus que {deadline.days} jours !")
 
 
 #################################################################################
