@@ -1,2 +1,2 @@
 # Dinobot
-Our discord bot
+My discord bot
