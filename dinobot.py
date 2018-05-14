@@ -15,6 +15,7 @@ bot = commands.Bot(command_prefix="!")
 
 @bot.event
 async def on_ready():
+    print("co")
     """
         Display one of the messages when joining a server
     """
@@ -50,9 +51,9 @@ async def dino(ctx):
     """
         Command to translate from human to dinolanguage !
     """
-    transTab = str.maketrans(
-        '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|} ', '"HmT!bN.>(U#EBks3;_|oea:PQ7`4@Yn}0cS<rd&fx1wG\\RqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ ')
+    transTab = str.maketrans('!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|} ', '"HmT!bN.>(U#EBks3;_|oea:PQ7`4@Yn}0cS<rd&fx1wG\\RqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ ')
     texts = ctx.message.content.split()[1:]
+    print(texts)
     strg = ""
     for text in texts:
         strg += f"{text.translate(transTab)}"
@@ -65,8 +66,7 @@ async def trad(ctx):
     """
         Command to translate from dinolanguage to human !
     """
-    transTab = str.maketrans('"HmT!bN.>(U#EBks3;_|oea:\\PQ7`4@Yn}0cS<rd&fx1wGRqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ ',
-                             '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|} ')
+    transTab = str.maketrans('"HmT!bN.>(U#EBks3;_|oea:\\PQ7`4@Yn}0cS<rd&fx1wGRqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ ', '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|} ')
     texts = ctx.message.content.split()[1:]
     strg = ""
     for text in texts:
@@ -81,9 +81,7 @@ async def deadline(ctx):
         Display days of the deadline
     """
     deadline = datetime(2018, 6, 16) - datetime.now()
-    await bot.say(f"Il ne reste plus que {deadline.days} jours !\n \
-        Fais vite, la DinoDeadline arrive !\n Elle se rapproche à \
-        grand pas...")
+    await bot.say(f"Il ne reste plus que {deadline.days} jours ! Fais vite, la DinoDeadline arrive !\nElle se rapproche à grand pas...")
 
 
 #################################################################################
@@ -99,8 +97,9 @@ async def rootme(ctx):
     """
     url = "https://www.root-me.org/"
     pseudos = ["Liodeus", "THEWOLF-37439",
-               "Moindjaro", "Ori0n__", "Sneagle-121577",
-               "CaptainKraken", "etraque"]
+               "Moindjaro", "Ori0n__",
+               "Sneagle-121577", "CaptainKraken",
+               "etraque"]
     dic = {}
 
     for pseudo in pseudos:
@@ -184,7 +183,7 @@ async def ctftime(ctx):
 #                                  CTF Commands                                 #
 #################################################################################
 
-"""faire"""
+
 @bot.command(pass_context=True)
 @commands.cooldown(1, 1, commands.BucketType.user)
 async def b64dec(ctx):
@@ -192,14 +191,15 @@ async def b64dec(ctx):
         Decode one/multiples base64 to string
     """
     text = ctx.message.content.split()[1:]
+    decode = ""
     for x in text:
         try:
-            decode = str(base64.b64decode(x), "utf-8")
-            await bot.say(decode)
-        except:
-            await bot.say("Erreur de decode")
+            decode += f"{base64.b64decode(x)} "
+        except base64.binascii.Error:
+            decode += "`Erreur` "
+    await bot.say(decode)
 
-"""faire"""
+
 @bot.command(pass_context=True)
 @commands.cooldown(1, 1, commands.BucketType.user)
 async def b64enc(ctx):
@@ -207,14 +207,15 @@ async def b64enc(ctx):
         Encode one/multiples string to base64
     """
     text = ctx.message.content.split()[1:]
+    encode = ""
     for x in text:
-        try:
-            encode = str(base64.b64encode(bytes(x, "utf-8")), "utf-8")
-            await bot.say(encode)
-        except:
-            await bot.say("Erreur d'encodage")
+        encode += str(base64.b64encode(bytes(x, "utf-8")), "utf-8")
+    await bot.say(encode)
+
 
 """faire"""
+
+
 @bot.command(pass_context=True)
 @commands.cooldown(1, 1, commands.BucketType.user)
 async def bin2text(ctx):
@@ -231,7 +232,7 @@ async def bin2text(ctx):
         except:
             await bot.say("Erreur de decode")
 
-"""faire"""
+
 @bot.command(pass_context=True)
 @commands.cooldown(1, 1, commands.BucketType.user)
 async def bin2hex(ctx):
@@ -239,14 +240,15 @@ async def bin2hex(ctx):
         Decode one/multiples binary to hexadecimal
     """
     binas = ctx.message.content.split()[1:]
+    decode = ""
     for bina in binas:
         try:
-            decode = f"{int(bina, 2):x}"
-            await bot.say(decode)
+            decode += f"{int(bina, 2):x} "
         except ValueError:
-            await bot.say("Erreur de decode")
+            decode += "`Erreur` "
+    await bot.say(decode)
 
-"""faire"""
+
 @bot.command(pass_context=True)
 @commands.cooldown(1, 1, commands.BucketType.user)
 async def bin2dec(ctx):
@@ -254,14 +256,15 @@ async def bin2dec(ctx):
         Decode one/multiples binary to decimal
     """
     binas = ctx.message.content.split()[1:]
+    decode = ""
     for bina in binas:
         try:
-            decode = f"{int(bina, 2)}"
-            await bot.say(decode)
+            decode += f"{int(bina, 2)} "
         except ValueError:
-            await bot.say("Erreur de decode")
+            decode += "`Erreur` "
+    await bot.say(decode)
 
-"""faire"""
+
 @bot.command(pass_context=True)
 @commands.cooldown(1, 1, commands.BucketType.user)
 async def bin2oct(ctx):
@@ -269,12 +272,13 @@ async def bin2oct(ctx):
         Decode one/multiples binary to octal
     """
     binas = ctx.message.content.split()[1:]
+    decode = ""
     for bina in binas:
         try:
-            decode = f"{int(bina, 2):o}"
-            await bot.say(decode)
+            decode += f"{int(bina, 2):o} "
         except ValueError:
-            await bot.say("Erreur de decode")
+            decode += "`Erreur` "
+    await bot.say(decode)
 
 
 @bot.command(pass_context=True)
@@ -298,13 +302,13 @@ async def text2hex(ctx):
         Encode one/multiples string to hexadecimal
     """
     texts = ctx.message.content.split()[1:]
-    encode = ""
+    decode = ""
     for text in texts:
         strg = ""
         for char in text:
             strg += f"0x{hex(ord(char))[2:]} "
-        encode += strg
-    await bot.say(encode)
+        decode += strg
+    await bot.say(decode)
 
 
 @bot.command(pass_context=True)
@@ -314,15 +318,15 @@ async def hex2int(ctx):
         Encode one/multiples hexadecimal to integer
     """
     hexas = ctx.message.content.split()[1:]
-    integers = ""
+    decode = ""
     for hexa in hexas:
         try:
-            integers += f"{str(int(hexa, 16))} "
+            decode += f"{str(int(hexa, 16))} "
         except TypeError:
-            integers += "`Erreur` "
+            decode += "`Erreur` "
         except ValueError:
-            integers += "`Erreur` "
-    await bot.say(integers)
+            decode += "`Erreur` "
+    await bot.say(decode)
 
 
 @bot.command(pass_context=True)
@@ -332,21 +336,21 @@ async def hex2text(ctx):
         Encode one/multiples hexadecimal to text
     """
     hexas = ctx.message.content.split()[1:]
-    res = ""
+    decode = ""
     for hexa in hexas:
         try:
             strg = ""
             for char in hexa.split("0x"):
                 if char != "":
                     strg += chr(int(char, 16))
-            res += f"{strg} "
+            decode += f"{strg} "
         except TypeError:
-            res += "`Erreur` "
+            decode += "`Erreur` "
         except ValueError:
-            res += "`Erreur` "
+            decode += "`Erreur` "
         except OverflowError:
-            res += "`Erreur` "
-    await bot.say(res)
+            decode += "`Erreur` "
+    await bot.say(decode)
 
 
 # hex2bin
