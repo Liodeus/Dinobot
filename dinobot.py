@@ -15,7 +15,6 @@ bot = commands.Bot(command_prefix="!")
 
 @bot.event
 async def on_ready():
-    print("co")
     """
         Display one of the messages when joining a server
     """
@@ -53,7 +52,6 @@ async def dino(ctx):
     """
     transTab = str.maketrans('!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|} ', '"HmT!bN.>(U#EBks3;_|oea:PQ7`4@Yn}0cS<rd&fx1wG\\RqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ ')
     texts = ctx.message.content.split()[1:]
-    print(texts)
     strg = ""
     for text in texts:
         strg += f"{text.translate(transTab)}"
@@ -82,6 +80,17 @@ async def deadline(ctx):
     """
     deadline = datetime(2018, 6, 16) - datetime.now()
     await bot.say(f"Il ne reste plus que {deadline.days} jours ! Fais vite, la DinoDeadline arrive !\nElle se rapproche à grand pas...")
+
+
+@bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def ask(ctx):
+    """
+        Command to translate from human to dinolanguage !
+    """
+    messages = ["Déso pas déso, je parle pas au triso !",
+                "M'en bat les couilles frère"]
+    await bot.say(messages[randint(0, len(messages) - 1)])
 
 
 #################################################################################
