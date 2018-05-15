@@ -23,15 +23,15 @@ async def on_ready():
                 "Dinobot arrive pour bouffer vos daronnes !",
                 "Dinobot ici pour casser du CDAISI !",
                 "Gogo dinoranger ! tutututututu"]
-    # for server in bot.servers:
-    #     lstChannel = list(server.channels)
-    #     lstChannelName = [x.name for x in list(server.channels)]
-    #     try:
-    #         index = lstChannelName.index("general")
-    #         message = messages[randint(0, len(messages) - 1)]
-    #         await bot.send_message(lstChannel[index], message)
-    #     except:
-    #         pass
+    for server in bot.servers:
+        lstChannel = list(server.channels)
+        lstChannelName = [x.name for x in list(server.channels)]
+        try:
+            index = lstChannelName.index("general")
+            message = messages[randint(0, len(messages) - 1)]
+            await bot.send_message(lstChannel[index], message)
+        except:
+            pass
 
 
 @bot.command()
@@ -62,6 +62,9 @@ async def info(ctx):
 @bot.command()
 @commands.cooldown(1, 5, commands.BucketType.user)
 async def help(ctx):
+    """
+        This is the help command
+    """
     embed = discord.Embed(
         "title"="Dinobot",
         "description"="Liste des commandes :",
@@ -480,12 +483,11 @@ async def hex2text(ctx):
 # url decode
 # text to rot13
 # rot13 to text
-
+# reverse a string
 
 #################################################################################
 #                                   Bot token                                   #
 #################################################################################
 
 
-bot.run("NDQzODE4NzAyNjc3NDc1MzM4.DdS9Sg.sExtRqGF1INzK3XWM4rO1_312kk")
-# bot.run(os.environ["BOT_TOKEN"])
+bot.run(os.environ["BOT_TOKEN"])
