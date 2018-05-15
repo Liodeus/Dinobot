@@ -11,6 +11,7 @@ import os
 
 
 bot = commands.Bot(command_prefix="!")
+bot.remove_command("help")
 
 
 @bot.event
@@ -22,15 +23,122 @@ async def on_ready():
                 "Dinobot arrive pour bouffer vos daronnes !",
                 "Dinobot ici pour casser du CDAISI !",
                 "Gogo dinoranger ! tutututututu"]
-    for server in bot.servers:
-        lstChannel = list(server.channels)
-        lstChannelName = [x.name for x in list(server.channels)]
-        try:
-            index = lstChannelName.index("general")
-            message = messages[randint(0, len(messages) - 1)]
-            await bot.send_message(lstChannel[index], message)
-        except:
-            pass
+    # for server in bot.servers:
+    #     lstChannel = list(server.channels)
+    #     lstChannelName = [x.name for x in list(server.channels)]
+    #     try:
+    #         index = lstChannelName.index("general")
+    #         message = messages[randint(0, len(messages) - 1)]
+    #         await bot.send_message(lstChannel[index], message)
+    #     except:
+    #         pass
+
+
+@bot.command()
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def info(ctx):
+    """
+        Command giving some infos about the bot
+    """
+    embed = discord.Embed(
+        "title"="Dinobot",
+        "description"="dCCz$C)t+%htz#%hO+%i,5X2hAQrKDO/CK",
+        color=0xe67e22
+    )
+    embed.add_field(
+        name="Author",
+        value="Liodeus"
+    )
+    embed.add_field(
+        name="Server count",
+        value=f"{len(bot.guilds)}"
+    )
+    embed.add_field(
+        name="Invite"
+        value="https://discordapp.com/api/oauth2/authorize?client_id=443818702677475338&permissions=0&scope=bot"
+    )
+
+
+@bot.command()
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def help(ctx):
+    embed = discord.Embed(
+        "title"="Dinobot",
+        "description"="Liste des commandes :",
+        color=0xe67e22
+    )
+    embed.add_field(
+        name="!help",
+        value="Montre ce menu."
+    )
+    embed.add_field(
+        name="!info",
+        value="Montre les infos concernant le bot."
+    )
+    embed.add_field(
+        name="!dino"
+        value="Traduit du langage humain au dinosaure."
+    )
+    embed.add_field(
+        name="!trad"
+        value="Traduit du langage dinosaure à l'humain."
+    )
+    embed.add_field(
+        name="!deadline"
+        value="Affiche le nombre de jours restant avant de rendre de mémoire."
+    )
+    embed.add_field(
+        name="!ask"
+        value="Pose une question à Dinobot, peut-être qu'il te répondra !"
+    )
+    embed.add_field(
+        name="!rootme"
+        value="Affiche le nombre de points de rootme."
+    )
+    embed.add_field(
+        name="!ctftime"
+        value="Affiche le scoreboard des 25 premières équipes françaises."
+    )
+    embed.add_field(
+        name="!b64enc"
+        value="Passe en base64 une/plusieurs phrases."
+    )
+    embed.add_field(
+        name="!b64dec"
+        value="Decode de la base64 une/plusieurs phrases."
+    )
+    embed.add_field(
+        name="!bin2text"
+        value="Passe du binaire à string."
+    )
+    embed.add_field(
+        name="!bin2hex"
+        value="Passe du binaire à l'hexadécimal."
+    )
+    embed.add_field(
+        name="!bin2dec"
+        value="Passe du binaire à décimal."
+    )
+    embed.add_field(
+        name="!bin2oct"
+        value="Passe du binaire  à l'octal."
+    )
+    embed.add_field(
+        name="!text2bin"
+        value="Passe de text à binaire."
+    )
+    embed.add_field(
+        name="!text2hex"
+        value="Passe de text à hexadécimal."
+    )
+    embed.add_field(
+        name="!hex2int"
+        value="Passe de l'hexadécimal à décimal."
+    )
+    embed.add_field(
+        name="!hex2text"
+        value="Passe de l'hexadécimal à string."
+    )
 
 
 @bot.event
@@ -83,14 +191,18 @@ async def deadline(ctx):
 
 
 @bot.command(pass_context=True)
-@commands.cooldown(1, 5, commands.BucketType.user)
+@commands.cooldown(5, 5, commands.BucketType.user)
 async def ask(ctx):
     """
         Command to translate from human to dinolanguage !
     """
     messages = ["Déso pas déso, je parle pas au triso !",
-                "M'en bat les couilles frère"]
-    await bot.say(messages[randint(0, len(messages) - 1)])
+                "M'en bat les couilles frère", "Oui", "Non"]
+    texts = ctx.message.content.split()[1:]
+    if texts:
+        await bot.say(messages[randint(0, len(messages) - 1)])
+    else:
+        await bot.say("Mais t'es débile ma parole ! Elle est ou la question ?")
 
 
 #################################################################################
@@ -117,8 +229,8 @@ async def rootme(ctx):
         infos = soup.find_all("ul", {"class": "spip"})
         spans = infos[0].find_all("span")
         score = spans[1].text
-
         dic[pseudo] = score
+
     order = collections.OrderedDict(sorted(dic.items(), key=lambda x: x[1]))
     final = [x for x in order.items()][::-1]
     _pseudo = '\n'.join(f"{x[0]}" for x in final)
@@ -364,10 +476,16 @@ async def hex2text(ctx):
 
 # hex2bin
 # hex2octal
+# url encode
+# url decode
+# text to rot13
+# rot13 to text
+
 
 #################################################################################
 #                                   Bot token                                   #
 #################################################################################
 
 
-bot.run(os.environ["BOT_TOKEN"])
+bot.run("NDQzODE4NzAyNjc3NDc1MzM4.DdS9Sg.sExtRqGF1INzK3XWM4rO1_312kk")
+# bot.run(os.environ["BOT_TOKEN"])
