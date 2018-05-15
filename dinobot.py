@@ -24,127 +24,141 @@ async def on_ready():
                 "Dinobot arrive pour bouffer vos daronnes !",
                 "Dinobot ici pour casser du CDAISI !",
                 "Gogo dinoranger ! tutututututu"]
-    for server in bot.servers:
-        lstChannel = list(server.channels)
-        lstChannelName = [x.name for x in list(server.channels)]
-        try:
-            index = lstChannelName.index("general")
-            message = messages[randint(0, len(messages) - 1)]
-            await bot.send_message(lstChannel[index], message)
-        except:
-            pass
+    # for server in bot.servers:
+    #     lstChannel = list(server.channels)
+    #     lstChannelName = [x.name for x in list(server.channels)]
+    #     try:
+    #         index = lstChannelName.index("general")
+    #         message = messages[randint(0, len(messages) - 1)]
+    #         await bot.send_message(lstChannel[index], message)
+    #     except:
+    #         pass
 
 
-@bot.command()
+@bot.command(pass_context=True)
 @commands.cooldown(1, 5, commands.BucketType.user)
 async def info(ctx):
     """
         Command giving some infos about the bot
     """
-    embed = discord.Embed(
+    embedInfo = discord.Embed(
         title="Dinobot",
-        description="dCCz$C)t+%htz#%hO+%i,5X2hAQrKDO/CK",
+        description="0,+L$CK+t{K%,Lz+t+%htz#%,+L52+X2hAQrKDO/CK",
         color=0xe67e22
     )
-    embed.add_field(
+    embedInfo.add_field(
         name="Author",
         value="Liodeus"
     )
-    embed.add_field(
-        name="Server count",
-        value=f"{len(bot.guilds)}"
-    )
-    embed.add_field(
+    embedInfo.add_field(
         name="Invite",
         value="https://discordapp.com/api/oauth2/authorize?client_id=443818702677475338&permissions=0&scope=bot"
     )
-    await bot.say(embed=embed)
+    await bot.say(embed=embedInfo)
 
 
-@bot.command()
+@bot.command(pass_context=True)
 @commands.cooldown(1, 5, commands.BucketType.user)
 async def help(ctx):
     """
         This is the help command
     """
-    embed = discord.Embed(
+    embedHelp = discord.Embed(
         title="Dinobot",
         description="Liste des commandes :",
         color=0xe67e22
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!help",
-        value="Montre ce menu."
+        value="Montre ce menu.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!info",
-        value="Montre les infos concernant le bot."
+        value="Montre les infos concernant le bot.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!dino",
-        value="Traduit du langage humain au dinosaure."
+        value="Traduit du langage humain au dinosaure.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!trad",
-        value="Traduit du langage dinosaure à l'humain."
+        value="Traduit du langage dinosaure à l'humain.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!deadline",
-        value="Affiche le nombre de jours restant avant de rendre de mémoire."
+        value="Affiche le nombre de jours restant avant de rendre de mémoire.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!ask",
-        value="Pose une question à Dinobot, peut-être qu'il te répondra !"
+        value="Pose une question à Dinobot, peut-être qu'il te répondra !",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!rootme",
-        value="Affiche le nombre de points de rootme."
+        value="Affiche le nombre de points de rootme.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!ctftime",
-        value="Affiche le scoreboard des 25 premières équipes françaises."
+        value="Affiche le scoreboard des 25 premières équipes françaises.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!b64enc",
-        value="Passe en base64 une/plusieurs phrases."
+        value="Passe en base64 une/plusieurs phrases.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!b64dec",
-        value="Decode de la base64 une/plusieurs phrases."
+        value="Decode de la base64 une/plusieurs phrases.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!bin2text",
-        value="Passe du binaire à string."
+        value="Passe du binaire à string.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!bin2hex",
-        value="Passe du binaire à l'hexadécimal."
+        value="Passe du binaire à l'hexadécimal.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!bin2dec",
-        value="Passe du binaire à décimal."
+        value="Passe du binaire à décimal.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!bin2oct",
-        value="Passe du binaire  à l'octal."
+        value="Passe du binaire  à l'octal.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!text2bin",
-        value="Passe de text à binaire."
+        value="Passe de text à binaire.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!text2hex",
-        value="Passe de text à hexadécimal."
+        value="Passe de text à hexadécimal.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!hex2int",
-        value="Passe de l'hexadécimal à décimal."
+        value="Passe de l'hexadécimal à décimal.",
+        inline=False
     )
-    embed.add_field(
+    embedHelp.add_field(
         name="!hex2text",
-        value="Passe de l'hexadécimal à string."
+        value="Passe de l'hexadécimal à string.",
+        inline=False
     )
-    await bot.say(embed=embed)
+    await bot.say(embed=embedHelp)
 
 
 @bot.event
@@ -164,11 +178,11 @@ async def dino(ctx):
     """
         Command to translate from human to dinolanguage !
     """
-    transTab = str.maketrans('!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|} ', '"HmT!bN.>(U#EBks3;_|oea:PQ7`4@Yn}0cS<rd&fx1wG\\RqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ ')
+    transTab = str.maketrans('!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}', '"HmT!bN.>(U#EBks3;_|oea:PQ7`4@Yn}0cS<rd&fx1wG\\RqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ')
     texts = ctx.message.content.split()[1:]
     strg = ""
     for text in texts:
-        strg += f"{text.translate(transTab)}"
+        strg += f"{text.translate(transTab)} "
     await bot.say(strg)
 
 
@@ -178,11 +192,11 @@ async def trad(ctx):
     """
         Command to translate from dinolanguage to human !
     """
-    transTab = str.maketrans('"HmT!bN.>(U#EBks3;_|oea:\\PQ7`4@Yn}0cS<rd&fx1wGRqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ ', '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|} ')
+    transTab = str.maketrans('"HmT!bN.>(U#EBks3;_|oea:PQ7`4@Yn}0cS<rd&fx1wG\\RqMIvF\'j9^/*l[=J8yh)Dz+XAi,$O26LC{gt5%Kp]u-?WVZ', '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}')
     texts = ctx.message.content.split()[1:]
     strg = ""
     for text in texts:
-        strg += f"{text.translate(transTab)}"
+        strg += f"{text.translate(transTab)} "
     await bot.say(strg)
 
 
@@ -197,7 +211,7 @@ async def deadline(ctx):
 
 
 @bot.command(pass_context=True)
-@commands.cooldown(5, 5, commands.BucketType.user)
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def ask(ctx):
     """
         Command to translate from human to dinolanguage !
@@ -492,5 +506,5 @@ async def hex2text(ctx):
 #                                   Bot token                                   #
 #################################################################################
 
-
-bot.run(os.environ["BOT_TOKEN"])
+bot.run("NDQzODE4NzAyNjc3NDc1MzM4.DdS9Sg.sExtRqGF1INzK3XWM4rO1_312kk")
+# bot.run(os.environ["BOT_TOKEN"])
