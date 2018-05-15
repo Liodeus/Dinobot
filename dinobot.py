@@ -24,15 +24,15 @@ async def on_ready():
                 "Dinobot arrive pour bouffer vos daronnes !",
                 "Dinobot ici pour casser du CDAISI !",
                 "Gogo dinoranger ! tutututututu"]
-    # for server in bot.servers:
-    #     lstChannel = list(server.channels)
-    #     lstChannelName = [x.name for x in list(server.channels)]
-    #     try:
-    #         index = lstChannelName.index("general")
-    #         message = messages[randint(0, len(messages) - 1)]
-    #         await bot.send_message(lstChannel[index], message)
-    #     except:
-    #         pass
+    for server in bot.servers:
+        lstChannel = list(server.channels)
+        lstChannelName = [x.name for x in list(server.channels)]
+        try:
+            index = lstChannelName.index("general")
+            message = messages[randint(0, len(messages) - 1)]
+            await bot.send_message(lstChannel[index], message)
+        except:
+            pass
 
 
 @bot.command()
@@ -42,8 +42,8 @@ async def info(ctx):
         Command giving some infos about the bot
     """
     embed = discord.Embed(
-        "title"="Dinobot",
-        "description"="dCCz$C)t+%htz#%hO+%i,5X2hAQrKDO/CK",
+        title="Dinobot",
+        description="dCCz$C)t+%htz#%hO+%i,5X2hAQrKDO/CK",
         color=0xe67e22
     )
     embed.add_field(
@@ -68,8 +68,8 @@ async def help(ctx):
         This is the help command
     """
     embed = discord.Embed(
-        "title"="Dinobot",
-        "description"="Liste des commandes :",
+        title="Dinobot",
+        description="Liste des commandes :",
         color=0xe67e22
     )
     embed.add_field(
@@ -81,67 +81,67 @@ async def help(ctx):
         value="Montre les infos concernant le bot."
     )
     embed.add_field(
-        name="!dino"
+        name="!dino",
         value="Traduit du langage humain au dinosaure."
     )
     embed.add_field(
-        name="!trad"
+        name="!trad",
         value="Traduit du langage dinosaure à l'humain."
     )
     embed.add_field(
-        name="!deadline"
+        name="!deadline",
         value="Affiche le nombre de jours restant avant de rendre de mémoire."
     )
     embed.add_field(
-        name="!ask"
+        name="!ask",
         value="Pose une question à Dinobot, peut-être qu'il te répondra !"
     )
     embed.add_field(
-        name="!rootme"
+        name="!rootme",
         value="Affiche le nombre de points de rootme."
     )
     embed.add_field(
-        name="!ctftime"
+        name="!ctftime",
         value="Affiche le scoreboard des 25 premières équipes françaises."
     )
     embed.add_field(
-        name="!b64enc"
+        name="!b64enc",
         value="Passe en base64 une/plusieurs phrases."
     )
     embed.add_field(
-        name="!b64dec"
+        name="!b64dec",
         value="Decode de la base64 une/plusieurs phrases."
     )
     embed.add_field(
-        name="!bin2text"
+        name="!bin2text",
         value="Passe du binaire à string."
     )
     embed.add_field(
-        name="!bin2hex"
+        name="!bin2hex",
         value="Passe du binaire à l'hexadécimal."
     )
     embed.add_field(
-        name="!bin2dec"
+        name="!bin2dec",
         value="Passe du binaire à décimal."
     )
     embed.add_field(
-        name="!bin2oct"
+        name="!bin2oct",
         value="Passe du binaire  à l'octal."
     )
     embed.add_field(
-        name="!text2bin"
+        name="!text2bin",
         value="Passe de text à binaire."
     )
     embed.add_field(
-        name="!text2hex"
+        name="!text2hex",
         value="Passe de text à hexadécimal."
     )
     embed.add_field(
-        name="!hex2int"
+        name="!hex2int",
         value="Passe de l'hexadécimal à décimal."
     )
     embed.add_field(
-        name="!hex2text"
+        name="!hex2text",
         value="Passe de l'hexadécimal à string."
     )
     await bot.say(embed=embed)
