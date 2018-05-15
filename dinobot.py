@@ -19,19 +19,20 @@ async def on_ready():
     """
         Display one of the messages when joining a server
     """
+    print("co")
     messages = ["Grrrrrr Dinobot arrive sur le serveur !",
                 "Dinobot arrive pour bouffer vos daronnes !",
                 "Dinobot ici pour casser du CDAISI !",
                 "Gogo dinoranger ! tutututututu"]
-    for server in bot.servers:
-        lstChannel = list(server.channels)
-        lstChannelName = [x.name for x in list(server.channels)]
-        try:
-            index = lstChannelName.index("general")
-            message = messages[randint(0, len(messages) - 1)]
-            await bot.send_message(lstChannel[index], message)
-        except:
-            pass
+    # for server in bot.servers:
+    #     lstChannel = list(server.channels)
+    #     lstChannelName = [x.name for x in list(server.channels)]
+    #     try:
+    #         index = lstChannelName.index("general")
+    #         message = messages[randint(0, len(messages) - 1)]
+    #         await bot.send_message(lstChannel[index], message)
+    #     except:
+    #         pass
 
 
 @bot.command()
@@ -54,7 +55,7 @@ async def info(ctx):
         value=f"{len(bot.guilds)}"
     )
     embed.add_field(
-        name="Invite"
+        name="Invite",
         value="https://discordapp.com/api/oauth2/authorize?client_id=443818702677475338&permissions=0&scope=bot"
     )
     await bot.say(embed=embed)
