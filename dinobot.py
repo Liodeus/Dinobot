@@ -19,20 +19,19 @@ async def on_ready():
     """
         Display one of the messages when joining a server
     """
-    print("co")
     messages = ["Grrrrrr Dinobot arrive sur le serveur !",
                 "Dinobot arrive pour bouffer vos daronnes !",
                 "Dinobot ici pour casser du CDAISI !",
                 "Gogo dinoranger ! tutututututu"]
-    # for server in bot.servers:
-    #     lstChannel = list(server.channels)
-    #     lstChannelName = [x.name for x in list(server.channels)]
-    #     try:
-    #         index = lstChannelName.index("general")
-    #         message = messages[randint(0, len(messages) - 1)]
-    #         await bot.send_message(lstChannel[index], message)
-    #     except:
-    #         pass
+    for server in bot.servers:
+        lstChannel = list(server.channels)
+        lstChannelName = [x.name for x in list(server.channels)]
+        try:
+            index = lstChannelName.index("general")
+            message = messages[randint(0, len(messages) - 1)]
+            await bot.send_message(lstChannel[index], message)
+        except:
+            pass
 
 
 @bot.command(pass_context=True)
@@ -506,5 +505,4 @@ async def hex2text(ctx):
 #                                   Bot token                                   #
 #################################################################################
 
-bot.run("NDQzODE4NzAyNjc3NDc1MzM4.DdS9Sg.sExtRqGF1INzK3XWM4rO1_312kk")
-# bot.run(os.environ["BOT_TOKEN"])
+bot.run(os.environ["BOT_TOKEN"])
