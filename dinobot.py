@@ -216,12 +216,26 @@ async def ask(ctx):
         Command to translate from human to dinolanguage !
     """
     messages = ["Déso pas déso, je parle pas au triso !",
-                "M'en bat les couilles frère", "Oui", "Non"]
+                "M'en bat les couilles frère", "Oui", "Non",
+                "Et ta mère ?", "Tu vas te prendre une dinomasquee ..."]
     texts = ctx.message.content.split()[1:]
     if texts:
         await bot.say(messages[randint(0, len(messages) - 1)])
     else:
         await bot.say("Mais t'es débile ma parole ! Elle est ou la question ?")
+
+
+
+@bot.command(pass_context=True)
+@commands.cooldown(1, 5, commands.BucketType.user)
+async def roulette(ctx):
+    """
+        Randomly choose a person
+    """
+    pseudos = [pseudo.name for pseudo in ctx.message.server.members]
+    choice = pseudos[randint(0, len(pseudos))]
+    texts = ctx.message.content.split()[1:]
+    await bot.say(f"{' '.join(texts)} : {choice}")
 
 
 #################################################################################
