@@ -57,6 +57,7 @@ async def info(ctx):
         name="Invite"
         value="https://discordapp.com/api/oauth2/authorize?client_id=443818702677475338&permissions=0&scope=bot"
     )
+    await bot.say(embed=embed)
 
 
 @bot.command()
@@ -142,6 +143,7 @@ async def help(ctx):
         name="!hex2text"
         value="Passe de l'hexadécimal à string."
     )
+    await bot.say(embed=embed)
 
 
 @bot.event
